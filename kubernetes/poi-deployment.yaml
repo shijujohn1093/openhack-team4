@@ -19,7 +19,7 @@ spec:
         image: registryfza7885.azurecr.io/tripinsights/poi:1.0
         envFrom:
         - secretRef:
-          name: db-server-user-pass
+           name: db-server-user-pass
         resources:
           requests:
             cpu: 100m
