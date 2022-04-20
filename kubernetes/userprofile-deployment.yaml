@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userprofile
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userprofile
+  template:
+    metadata:
+      labels:
+        app: userprofile
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: userprofile
+        image: registryfza7885.azurecr.io/tripinsights/userprofile:1.0
+        env:
+        - name: SQL_USER
+          value: "sqladminfZa7885"
+        - name: SQL_PASSWORD
+          value: "Strategy@24"
+        - name: SQL_SERVER
+          value: "sqlserverfza7885.database.windows.net"
+        - name: SQL_DBNAME
+          value: "mydrivingDB"  
+
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+        ports:
+        - containerPort: 80
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userprofile-svc
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: userprofile
+---
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userprofile-svc-lb
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: userprofile
