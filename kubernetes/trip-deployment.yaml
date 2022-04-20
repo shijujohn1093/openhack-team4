@@ -22,7 +22,7 @@ spec:
           value: "true"   
         envFrom:
         - secretRef:
-           name: db-server-user-pass
+            name: db-server-user-pass
         resources:
           requests:
             cpu: 100m
