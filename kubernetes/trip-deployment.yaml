@@ -17,18 +17,12 @@ spec:
       containers:
       - name: trip
         image: registryfza7885.azurecr.io/tripinsights/trips:1.0
-        env:
-        - name: SQL_USER
-          value: "sqladminfZa7885"
-        - name: SQL_PASSWORD
-          value: "Strategy@24"
-        - name: SQL_SERVER
-          value: "sqlserverfza7885.database.windows.net"
-        - name: SQL_DBNAME
-          value: "mydrivingDB"  
+        env: 
         - name: DEBUG_LOGGING
           value: "true"   
-
+        envFrom:
+        - secretRef:
+           name: db-server-user-pass
         resources:
           requests:
             cpu: 100m
