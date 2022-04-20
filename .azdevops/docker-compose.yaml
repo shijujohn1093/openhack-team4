@@ -2,8 +2,8 @@ version: '3'
 services:
   poi:
     build:
-      context: ../src/poi
-      dockerfile: ../../dockerfiles/Dockerfile_3
+      context: src/poi
+      dockerfile: dockerfiles/Dockerfile_3
     image: tripinsights/poi:1.0
 
   trips:
