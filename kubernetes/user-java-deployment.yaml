@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: java
+  template:
+    metadata:
+      labels:
+        app: java
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: java
+        image: registryfza7885.azurecr.io/tripinsights/user-java:1.0
+        env:
+        - name: SQL_USER
+          value: "sqladminfZa7885"
+        - name: SQL_PASSWORD
+          value: "Strategy@24"
+        - name: SQL_SERVER
+          value: "sqlserverfza7885.database.windows.net"
+        - name: SQL_DBNAME
+          value: "mydrivingDB"   
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+        ports:
+        - containerPort: 80
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-svc
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: java
+---
+
