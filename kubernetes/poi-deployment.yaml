@@ -17,6 +17,9 @@ spec:
       containers:
       - name: poi
         image: registryfza7885.azurecr.io/tripinsights/poi:1.0
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+         value: 'Development'
         envFrom:
         - secretRef:
            name: db-server-user-pass
