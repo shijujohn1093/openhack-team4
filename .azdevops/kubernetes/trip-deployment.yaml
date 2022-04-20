@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trip
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trip
+  template:
+    metadata:
+      labels:
+        app: trip
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: trip
+        image: registryfza7885.azurecr.io/tripinsights/trips:1.0
+        env:
+        - name: SQL_USER
+          value: "sqladminfZa7885"
+        - name: SQL_PASSWORD
+          value: "Strategy@24"
+        - name: SQL_SERVER
+          value: "sqlserverfza7885.database.windows.net"
+        - name: SQL_DBNAME
+          value: "mydrivingDB"  
+        - name: DEBUG_LOGGING
+          value: "true"   
+
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+        ports:
+        - containerPort: 80
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trip-svc
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: trip
+---
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trip-svc-lb
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: trip
