@@ -19,7 +19,7 @@ spec:
         image: registryfza7885.azurecr.io/tripinsights/poi:1.0
         env:
         - name: ASPNETCORE_ENVIRONMENT
-         value: 'Development'
+          value: 'Development'
         envFrom:
         - secretRef:
            name: db-server-user-pass
@@ -33,6 +33,7 @@ spec:
         ports:
         - containerPort: 80
           name: http
+          protocol: TCP
 ---
 apiVersion: v1
 kind: Service

@@ -31,27 +31,13 @@ spec:
         ports:
         - containerPort: 80
           name: http
+          protocol: TCP
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: userprofile-svc
 spec:
-  ports:
-  - port: 80
-    targetPort: 80
-    protocol: TCP
-  selector:
-    app: userprofile
----
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: userprofile-svc-lb
-spec:
-  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 80

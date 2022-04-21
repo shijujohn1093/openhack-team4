@@ -19,9 +19,9 @@ spec:
         image: registryfza7885.azurecr.io/tripinsights/tripviewer:1.0
         env:
         - name: TRIPS_API_ENDPOINT
-          value: "http://10.244.1.10"
+          value: "http://10.0.146.100"
         - name: USERPROFILE_API_ENDPOINT
-          value: "http://10.244.1.11"
+          value: "http://10.0.138.62"
         resources:
           requests:
             cpu: 100m
@@ -32,6 +32,7 @@ spec:
         ports:
         - containerPort: 80
           name: http
+          protocol: TCP
 ---
 apiVersion: v1
 kind: Service
