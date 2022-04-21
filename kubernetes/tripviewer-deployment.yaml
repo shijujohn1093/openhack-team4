@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tripviewer
+  namespace: web
 spec:
   replicas: 1
   selector:
@@ -19,9 +20,9 @@ spec:
         image: registryfza7885.azurecr.io/tripinsights/tripviewer:1.0
         env:
         - name: TRIPS_API_ENDPOINT
-          value: "http://10.0.146.100"
+          value: "http://10.0.233.17"
         - name: USERPROFILE_API_ENDPOINT
-          value: "http://10.0.138.62"
+          value: "http://10.0.188.24"
         resources:
           requests:
             cpu: 100m
@@ -38,8 +39,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: tripviewer-svc-lb
+  namespace: web
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 80
   selector:
